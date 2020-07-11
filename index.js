@@ -1,14 +1,4 @@
-const express = require("express");
-const routes = require("./src/routes");
-const { handleCors } = require("./src/middlewares");
-
-const app = express();
-app.use(express.json());
-
-app.use(handleCors);
-
-app.use(routes);
-
+const app = require("./app");
 process.on("unhandledRejection", function (err) {
   console.error("UnhandledRejection error" + err);
 });

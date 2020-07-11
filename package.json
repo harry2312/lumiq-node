@@ -10,7 +10,9 @@
   "author": "harry",
   "license": "ISC",
   "dependencies": {
+    "aws-serverless-express": "^3.3.8",
     "axios": "^0.19.2",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "serverless-offline": "^6.4.0"
   }
 }

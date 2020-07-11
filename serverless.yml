@@ -1,0 +1,56 @@
+service: api-connect
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage, 'dev'}
+  vpc: ${self:custom.vpc.${self:provider.stage}}
+  region: ap-south-1
+  # Environment Variables
+  environment:
+    DB_URI: ${self:custom.dbURI.${self:provider.stage}}
+
+# Custom Variables
+custom:
+  stages:
+    - prod
+    - qa
+    - beta
+    - dev
+  dbURI:
+    prod: prodMongoURI
+    qa: qaMongoURI
+    beta: betaMongoURI
+    dev: devMongoURI
+  vpc:
+    dev:
+      securityGroupIds: []
+      subnetIds: []
+    qa:
+      securityGroupIds: []
+      subnetIds: []
+    beta:
+      securityGroupIds: []
+      subnetIds: []
+    prod:
+      securityGroupIds: []
+      subnetIds: []
+
+
+functions:
+  app:
+    handler: sls.handler
+    events:
+      - http:
+          path: /
+          method: ANY
+          cors: true
+          # private: true
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors: true
+          # private: true
